@@ -1,6 +1,21 @@
 from django.shortcuts import render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Car
 from django.http import HttpResponse
+
+class CarUpdate(UpdateView):
+    model = Car
+    fields = ['color']
+
+class CarDelete(DeleteView):
+    model = Car
+    success_url = '/cars/'
+
+
+class CarCreate(CreateView):
+    model = Car
+    fields= '__all__'
+    success_url = '/cars/'
 
 
 def home(request):
@@ -16,3 +31,4 @@ def cars_index(request):
 def cars_detail(request, car_id):
     car = Car.objects.get(id=car_id)
     return render(request, 'cars/detail.html', {'car': car})
+
